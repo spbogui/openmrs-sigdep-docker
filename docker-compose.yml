@@ -56,6 +56,7 @@ services:
       JAVA_XMX: ${JAVA_XMX:-4G}
       TZ: ${TZ:-Africa/Abidjan}
     volumes:
+      # chemin (./openmrs-data) = dossier visible ; nom (openmrs-data) = volume Docker
       - ${OPENMRS_DATA_PATH:-./openmrs-data}:/openmrs/data
     # ports:                                       # accès direct sans nginx
     #   - "8080:8080"
@@ -81,7 +82,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    entrypoint: ["/bin/bash", "/scripts/backup.sh"]
+    # copie normalisée en LF (robuste si le kit a été édité sous Windows)
+    entrypoint:
+      - /bin/bash
+      - -c
+      - sed 's/\r$$//' /scripts/backup.sh > /usr/local/bin/sigdep-backup && chmod +x /usr/local/bin/sigdep-backup && exec sigdep-backup
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       DB_HOST: db
@@ -96,6 +101,7 @@ services:
 
 volumes:
   db-data:
+  openmrs-data:        # utilisé si OPENMRS_DATA_PATH=openmrs-data (recommandé sous Windows)
 
 networks:
   sigdep:

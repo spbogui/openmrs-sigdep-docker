@@ -14,3 +14,6 @@ backups/
 .DS_Store
 .idea/
 *.log
+
+# Kits de déploiement générés
+dist/

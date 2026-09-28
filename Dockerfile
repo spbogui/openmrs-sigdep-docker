@@ -22,6 +22,7 @@ FROM alpine:3.20 AS builder
 COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
 COPY wars/openmrs.war /tmp/openmrs.war
 COPY docker/ROOT/ /usr/local/tomcat/webapps/ROOT/
+COPY docker/entrypoint.sh /tmp/entrypoint.sh
 RUN set -eux; \
     cd /usr/local/tomcat; \
     # applications, docs et bibliothèques natives (glibc) inutiles
@@ -34,7 +35,9 @@ RUN set -eux; \
     # WAR pré-décompressé : démarrage plus rapide, pas de double copie
     mkdir -p webapps/openmrs; \
     unzip -q /tmp/openmrs.war -d webapps/openmrs; \
-    rm -f /tmp/openmrs.war
+    rm -f /tmp/openmrs.war; \
+    # fin de ligne Unix (au cas où le dépôt a été extrait sous Windows en CRLF)
+    sed -i 's/\r$//' /tmp/entrypoint.sh; chmod 755 /tmp/entrypoint.sh
 
 # ---------------------------------------------------------------------------
 # Étape 3 : image finale
@@ -63,7 +66,7 @@ RUN set -eux; \
 
 COPY --from=builder --chown=openmrs:openmrs /usr/local/tomcat /usr/local/tomcat
 COPY --chown=openmrs:openmrs modules/*.omod /opt/sigdep/modules/
-COPY --chmod=755 docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --from=builder /tmp/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 VOLUME ["/openmrs/data"]
 EXPOSE 8080

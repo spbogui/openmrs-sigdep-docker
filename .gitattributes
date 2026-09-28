@@ -1,0 +1,18 @@
+# Fins de ligne : les scripts exécutés dans les conteneurs DOIVENT rester en LF,
+# même si le dépôt est cloné sous Windows (core.autocrlf=true).
+*                 text=auto
+*.sh              text eol=lf
+Dockerfile        text eol=lf
+*.conf            text eol=lf
+*.yml             text eol=lf
+*.jsp             text eol=lf
+.env*             text eol=lf
+# Scripts Windows en CRLF
+*.ps1             text eol=crlf
+*.bat             text eol=crlf
+*.cmd             text eol=crlf
+# Binaires
+*.war binary
+*.omod binary
+*.gz binary
+*.zip binary

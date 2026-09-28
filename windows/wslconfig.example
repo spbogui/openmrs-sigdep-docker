@@ -1,0 +1,7 @@
+# Copier ce fichier dans  C:\Users\<utilisateur>\.wslconfig  puis executer :  wsl --shutdown
+# Limite la memoire allouee a Docker Desktop / WSL2 (par defaut : 50 % de la RAM).
+# Regle : JAVA_XMX + MYSQL_INNODB_BUFFER + ~2 Go.  Exemple pour un PC de 16 Go :
+[wsl2]
+memory=10GB
+processors=4
+swap=4GB
