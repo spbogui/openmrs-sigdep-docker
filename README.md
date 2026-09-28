@@ -43,8 +43,6 @@ Les fichiers lourds (`.war`, `.omod`, dumps, données, sauvegardes) et le `.env`
 - `wars/openmrs.war` : le WAR OpenMRS utilisé par SIGDEP.
 - `modules/*.omod` : les modules à embarquer.
 
-> Les serveurs des sites sont en `linux/amd64`. Sur un Mac Apple Silicon, `build.sh` construit par défaut pour `linux/amd64` (émulation, plus lent mais correct).
-
 ### Construire
 
 ```bash
