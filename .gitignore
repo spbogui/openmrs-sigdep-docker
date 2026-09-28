@@ -1,0 +1,16 @@
+# Binaires lourds (déposés localement, jamais versionnés)
+wars/*.war
+modules/*.omod
+db/init/*.sql
+db/init/*.sql.gz
+db/init/*.zip
+
+# Données et secrets des sites
+.env
+openmrs-data/
+backups/
+
+# Divers
+.DS_Store
+.idea/
+*.log
